@@ -3,6 +3,7 @@ package com.jovana.springbootrestfulwebservices.service;
 import com.jovana.springbootrestfulwebservices.dto.UserDto;
 import com.jovana.springbootrestfulwebservices.entity.User;
 import com.jovana.springbootrestfulwebservices.mapper.ClassicUserMapper;
+import com.jovana.springbootrestfulwebservices.mapper.UserMapper;
 import com.jovana.springbootrestfulwebservices.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,15 +16,16 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
     
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
     
     @Override
     public UserDto createUser (UserDto userDto) {
-        return ClassicUserMapper.mapToUserDto(userRepository.save(ClassicUserMapper.mapToUser(userDto)));
+        return userMapper.userToUserDto(userRepository.save(userMapper.userDtoToUser(userDto)));
     }
     
     @Override
     public UserDto getUserById (Long id) {
-        return ClassicUserMapper.mapToUserDto(userRepository.findById(id)
+        return userMapper.userToUserDto(userRepository.findById(id)
                                                             .orElseThrow());
     }
     
@@ -31,7 +33,7 @@ public class UserServiceImpl implements UserService {
     public List<UserDto> getAllUsers () {
         List<User> users = userRepository.findAll();
         return users.stream()
-                    .map(ClassicUserMapper::mapToUserDto)
+                    .map(userMapper::userToUserDto)
                     .collect(Collectors.toList());
     }
     
@@ -42,7 +44,7 @@ public class UserServiceImpl implements UserService {
         existingUser.setEmail(userDto.email());
         existingUser.setFirstName(userDto.firstName());
         existingUser.setLastName(userDto.lastName());
-        return ClassicUserMapper.mapToUserDto(userRepository.save(existingUser));
+        return userMapper.userToUserDto(userRepository.save(existingUser));
         
     }
     
