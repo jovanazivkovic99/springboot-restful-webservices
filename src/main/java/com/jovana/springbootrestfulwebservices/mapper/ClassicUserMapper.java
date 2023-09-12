@@ -3,11 +3,7 @@ package com.jovana.springbootrestfulwebservices.mapper;
 import com.jovana.springbootrestfulwebservices.dto.UserDto;
 import com.jovana.springbootrestfulwebservices.entity.User;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-public class UserMapper {
+public class ClassicUserMapper {
     
     public static UserDto mapToUserDto (User user) {
         UserDto userDto = UserDto.builder()

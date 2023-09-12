@@ -2,7 +2,7 @@ package com.jovana.springbootrestfulwebservices.service;
 
 import com.jovana.springbootrestfulwebservices.dto.UserDto;
 import com.jovana.springbootrestfulwebservices.entity.User;
-import com.jovana.springbootrestfulwebservices.mapper.UserMapper;
+import com.jovana.springbootrestfulwebservices.mapper.ClassicUserMapper;
 import com.jovana.springbootrestfulwebservices.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,20 +18,20 @@ public class UserServiceImpl implements UserService {
     
     @Override
     public UserDto createUser (UserDto userDto) {
-        return UserMapper.mapToUserDto(userRepository.save(UserMapper.mapToUser(userDto)));
+        return ClassicUserMapper.mapToUserDto(userRepository.save(ClassicUserMapper.mapToUser(userDto)));
     }
     
     @Override
     public UserDto getUserById (Long id) {
-        return UserMapper.mapToUserDto(userRepository.findById(id)
-                                                     .orElseThrow());
+        return ClassicUserMapper.mapToUserDto(userRepository.findById(id)
+                                                            .orElseThrow());
     }
     
     @Override
     public List<UserDto> getAllUsers () {
         List<User> users = userRepository.findAll();
         return users.stream()
-                    .map(UserMapper::mapToUserDto)
+                    .map(ClassicUserMapper::mapToUserDto)
                     .collect(Collectors.toList());
     }
     
@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
         existingUser.setEmail(userDto.email());
         existingUser.setFirstName(userDto.firstName());
         existingUser.setLastName(userDto.lastName());
-        return UserMapper.mapToUserDto(userRepository.save(existingUser));
+        return ClassicUserMapper.mapToUserDto(userRepository.save(existingUser));
         
     }
     
