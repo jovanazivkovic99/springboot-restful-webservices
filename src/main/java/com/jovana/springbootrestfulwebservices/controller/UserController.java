@@ -1,6 +1,6 @@
 package com.jovana.springbootrestfulwebservices.controller;
 
-import com.jovana.springbootrestfulwebservices.entity.User;
+import com.jovana.springbootrestfulwebservices.dto.UserDto;
 import com.jovana.springbootrestfulwebservices.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,24 +17,24 @@ public class UserController {
     
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public User createUser (@RequestBody User user) {
+    public UserDto createUser (@RequestBody UserDto user) {
         return userService.createUser(user);
     }
     
     @GetMapping("/{id}")
-    public User getUserById (@PathVariable Long id) {
+    public UserDto getUserById (@PathVariable Long id) {
         return userService.getUserById(id);
     }
     
     @GetMapping
-    public List<User> getAllUsers () {
+    public List<UserDto> getAllUsers () {
         return userService.getAllUsers();
     }
     
     @PutMapping("/{id}")
-    public User updateUser (@RequestBody User user, @PathVariable Long id) {
-        user.setId(id);
-        return userService.updateUser(user);
+    public UserDto updateUser (@PathVariable Long id, @RequestBody UserDto userDto) {
+        
+        return userService.updateUser(id, userDto);
     }
     
     @DeleteMapping("/{id}")
