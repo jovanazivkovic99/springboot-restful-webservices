@@ -4,6 +4,7 @@ import com.jovana.springbootrestfulwebservices.dto.UserDto;
 import com.jovana.springbootrestfulwebservices.exception.ErrorDetails;
 import com.jovana.springbootrestfulwebservices.exception.ResourceNotFoundException;
 import com.jovana.springbootrestfulwebservices.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class UserController {
     
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDto createUser (@RequestBody UserDto user) {
+    public UserDto createUser (@Valid @RequestBody UserDto user) {
         return userService.createUser(user);
     }
     
@@ -37,7 +38,7 @@ public class UserController {
     }
     
     @PutMapping("/{id}")
-    public UserDto updateUser (@PathVariable Long id, @RequestBody UserDto userDto) {
+    public UserDto updateUser (@PathVariable Long id, @Valid @RequestBody UserDto userDto) {
         
         return userService.updateUser(id, userDto);
     }
