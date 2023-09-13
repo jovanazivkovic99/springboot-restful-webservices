@@ -6,9 +6,12 @@ import lombok.Builder;
 
 @Builder
 public record UserDto(Long id,
-                      @NotEmpty // should not be null or empty
+                      @NotEmpty(message = "User first name must not be null or empty.")
                       String firstName,
-                      @NotEmpty String lastName,
-                      @NotEmpty @Email String email) {
+                      @NotEmpty (message = "User last name must not be null or empty.")
+                      String lastName,
+                      @NotEmpty(message = "User email must not be null or empty.")
+                      @Email (message = "Email address must be valid.")
+                      String email) {
 
 }
