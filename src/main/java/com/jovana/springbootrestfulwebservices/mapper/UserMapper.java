@@ -8,7 +8,8 @@ import org.mapstruct.MappingConstants;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING, injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface UserMapper {
-
-    UserDto userToUserDto(User user);
-    User userDtoToUser(UserDto userDto);
+    
+    UserDto userToUserDto (User user);
+    
+    User userDtoToUser (UserDto userDto);
 }

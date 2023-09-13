@@ -1,17 +1,12 @@
 package com.jovana.springbootrestfulwebservices.controller;
 
 import com.jovana.springbootrestfulwebservices.dto.UserDto;
-import com.jovana.springbootrestfulwebservices.exception.ErrorDetails;
-import com.jovana.springbootrestfulwebservices.exception.ResourceNotFoundException;
 import com.jovana.springbootrestfulwebservices.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
