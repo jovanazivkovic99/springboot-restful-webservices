@@ -2,7 +2,7 @@ package com.jovana.springbootrestfulwebservices.service;
 
 import com.jovana.springbootrestfulwebservices.dto.UserDto;
 import com.jovana.springbootrestfulwebservices.entity.User;
-import com.jovana.springbootrestfulwebservices.mapper.ClassicUserMapper;
+import com.jovana.springbootrestfulwebservices.exception.ResourceNotFoundException;
 import com.jovana.springbootrestfulwebservices.mapper.UserMapper;
 import com.jovana.springbootrestfulwebservices.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto getUserById (Long id) {
         return userMapper.userToUserDto(userRepository.findById(id)
-                                                            .orElseThrow());
+                                                      .orElseThrow(() -> new ResourceNotFoundException("User",
+                                                                                                       "id",
+                                                                                                       id)));
+        
     }
     
     @Override
@@ -40,7 +43,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto updateUser (Long id, UserDto userDto) {
         
-        User existingUser = userRepository.findById(id).orElseThrow();
+        User existingUser = userRepository.findById(id)
+                                          .orElseThrow(() -> new ResourceNotFoundException("User", "id",
+                                                                                           id));
         existingUser.setEmail(userDto.email());
         existingUser.setFirstName(userDto.firstName());
         existingUser.setLastName(userDto.lastName());
@@ -50,6 +55,7 @@ public class UserServiceImpl implements UserService {
     
     @Override
     public void deleteUser (Long id) {
+        userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
         userRepository.deleteById(id);
     }
 }
