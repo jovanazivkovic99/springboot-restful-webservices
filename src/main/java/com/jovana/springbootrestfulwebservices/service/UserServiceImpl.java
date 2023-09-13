@@ -2,6 +2,7 @@ package com.jovana.springbootrestfulwebservices.service;
 
 import com.jovana.springbootrestfulwebservices.dto.UserDto;
 import com.jovana.springbootrestfulwebservices.entity.User;
+import com.jovana.springbootrestfulwebservices.exception.EmailAlreadyExistsException;
 import com.jovana.springbootrestfulwebservices.exception.ResourceNotFoundException;
 import com.jovana.springbootrestfulwebservices.mapper.UserMapper;
 import com.jovana.springbootrestfulwebservices.repository.UserRepository;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,6 +22,10 @@ public class UserServiceImpl implements UserService {
     
     @Override
     public UserDto createUser (UserDto userDto) {
+        Optional<User> user = userRepository.findByEmail(userDto.email());
+        if(user.isPresent()){
+            throw new EmailAlreadyExistsException("Email already exists.");
+        }
         return userMapper.userToUserDto(userRepository.save(userMapper.userDtoToUser(userDto)));
     }
     
@@ -58,4 +64,6 @@ public class UserServiceImpl implements UserService {
         userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
         userRepository.deleteById(id);
     }
+    
+    
 }
