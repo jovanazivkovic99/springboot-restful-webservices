@@ -22,6 +22,8 @@ management:
   endpoint:
     health:
       show-details: always
+    shutdown:
+      enabled: true
 info:
   app:
     name: Spring Boot Restful Web Services
